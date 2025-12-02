@@ -16,12 +16,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
-    """Set up a Tursib sensor from a config entry."""
+    """Set up sensor entities for a config entry."""
+    coordinator = hass.data[DOMAIN][config_entry.entry_id]
     station_id = config_entry.data["station_id"]
     station_name = config_entry.data["station_name"]
-
-    coordinator = TursibCoordinator(hass, station_id, station_name)
-    await coordinator.async_config_entry_first_refresh()
 
     async_add_entities([TursibSensor(coordinator, station_id, station_name)])
 
