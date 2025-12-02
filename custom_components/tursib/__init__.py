@@ -10,7 +10,6 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up Tursib integration from YAML (deprecated)."""
-    # We want users to use the UI config flow, but allow YAML for migration.
     hass.data.setdefault(DOMAIN, {})
     return True
 
@@ -20,12 +19,14 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.entry_id] = entry.data
 
-    # Forward the setup to the sensor platform
-    hass.async_create_task(
-        hass.config_entries.async_forward_entry_setup(entry, "sensor")
-    )
+    # Forward the setup to the sensor platform (new API)
+    await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
 
-    _LOGGER.info("Tursib integration set up with stations: %s", entry.data.get("stations", {}))
+    _LOGGER.info(
+        "Tursib integration set up with station: %s (%s)",
+        entry.data.get("station_name"),
+        entry.data.get("station_id"),
+    )
     return True
 
 
