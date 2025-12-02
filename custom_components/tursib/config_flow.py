@@ -1,6 +1,7 @@
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
+
 from .const import DOMAIN
 
 CONF_STATION_ID = "station_id"
@@ -15,7 +16,14 @@ class TursibConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_user(self, user_input=None):
         errors = {}
         if user_input is not None:
-            return self.async_create_entry(title=user_input[CONF_STATION_NAME], data=user_input)
+            # Creează intrarea cu cheile corecte
+            return self.async_create_entry(
+                title=user_input[CONF_STATION_NAME],
+                data={
+                    CONF_STATION_ID: user_input[CONF_STATION_ID],
+                    CONF_STATION_NAME: user_input[CONF_STATION_NAME],
+                },
+            )
 
         schema = vol.Schema(
             {
@@ -35,12 +43,24 @@ class TursibOptionsFlowHandler(config_entries.OptionsFlow):
 
     async def async_step_init(self, user_input=None):
         if user_input is not None:
-            return self.async_create_entry(title="", data=user_input)
+            return self.async_create_entry(
+                title="",
+                data={
+                    CONF_STATION_ID: user_input[CONF_STATION_ID],
+                    CONF_STATION_NAME: user_input[CONF_STATION_NAME],
+                },
+            )
 
         schema = vol.Schema(
             {
-                vol.Required(CONF_STATION_ID, default=self.config_entry.data[CONF_STATION_ID]): str,
-                vol.Required(CONF_STATION_NAME, default=self.config_entry.data[CONF_STATION_NAME]): str,
+                vol.Required(
+                    CONF_STATION_ID,
+                    default=self.config_entry.data.get(CONF_STATION_ID, ""),
+                ): str,
+                vol.Required(
+                    CONF_STATION_NAME,
+                    default=self.config_entry.data.get(CONF_STATION_NAME, ""),
+                ): str,
             }
         )
 
