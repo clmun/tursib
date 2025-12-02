@@ -1,7 +1,7 @@
 import datetime
 import math
 import logging
-import requests
+import aiohttp
 from bs4 import BeautifulSoup
 
 from homeassistant.components.sensor import SensorEntity
@@ -10,68 +10,70 @@ from homeassistant.helpers.update_coordinator import (
     UpdateFailed,
 )
 
+from .const import DOMAIN
+
 _LOGGER = logging.getLogger(__name__)
-DOMAIN = "tursib"
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
+    """Set up a Tursib sensor from a config entry."""
     station_id = config_entry.data["station_id"]
     station_name = config_entry.data["station_name"]
-    coordinator = TursibCoordinator(hass, {station_id: station_name})
+
+    coordinator = TursibCoordinator(hass, station_id, station_name)
     await coordinator.async_config_entry_first_refresh()
 
     async_add_entities([TursibSensor(coordinator, station_id, station_name)])
 
 
-
 class TursibCoordinator(DataUpdateCoordinator):
-    """Coordinator to fetch and parse Tursib data."""
+    """Coordinator to fetch and parse Tursib data for one station."""
 
-    def __init__(self, hass, stations):
+    def __init__(self, hass, station_id, station_name):
         super().__init__(
             hass,
             _LOGGER,
-            name="Tursib",
+            name=f"Tursib {station_name}",
             update_interval=datetime.timedelta(minutes=1),
         )
-        self.stations = stations
+        self.station_id = station_id
+        self.station_name = station_name
 
     async def _async_update_data(self):
-        """Fetch data for all stations."""
-        data = {}
+        """Fetch data for the configured station asynchronously."""
         now = datetime.datetime.now()
+        try:
+            url = f"https://tursib.ro/s/{self.station_id}?arrivals=on"
+            async with aiohttp.ClientSession() as session:
+                async with session.get(url, timeout=15) as resp:
+                    if resp.status != 200:
+                        raise UpdateFailed(f"HTTP error {resp.status}")
+                    text = await resp.text()
 
-        for station_id, name in self.stations.items():
-            try:
-                url = f"https://tursib.ro/s/{station_id}?arrivals=on"
-                resp = requests.get(url, timeout=15)
-                resp.raise_for_status()
-                parsed = self.parse_html_to_json(resp.text)
+            parsed = self.parse_html_to_json(text)
 
-                weekday = now.weekday()
-                if weekday < 5:
-                    program_key = "luni-vineri"
-                    program_label = "Luni–Vineri"
-                elif weekday == 5:
-                    program_key = "sambata"
-                    program_label = "Sâmbătă"
-                else:
-                    program_key = "duminica"
-                    program_label = "Duminică"
+            weekday = now.weekday()
+            if weekday < 5:
+                program_key = "luni-vineri"
+                program_label = "Luni–Vineri"
+            elif weekday == 5:
+                program_key = "sambata"
+                program_label = "Sâmbătă"
+            else:
+                program_key = "duminica"
+                program_label = "Duminică"
 
-                departures_raw = parsed.get(program_key, [])
-                departures_sorted = self._sorted_departures(departures_raw, now)
+            departures_raw = parsed.get(program_key, [])
+            departures_sorted = self._sorted_departures(departures_raw, now)
 
-                data[station_id] = {
-                    "station": name,
-                    "program": program_label,
-                    "departures": departures_sorted,
-                    "last_update": datetime.datetime.now().isoformat(),
-                }
-            except Exception as e:
-                raise UpdateFailed(f"Error updating station {name}: {e}")
-
-        return data
+            return {
+                "station": self.station_name,
+                "program": program_label,
+                "departures": departures_sorted,
+                "last_update": datetime.datetime.now().isoformat(),
+            }
+        except Exception as e:
+            raise UpdateFailed(f"Error updating station {self.station_name}: {e}")
 
     def _minutes_and_dt(self, now_dt, hhmm):
         try:
@@ -148,17 +150,17 @@ class TursibCoordinator(DataUpdateCoordinator):
 class TursibSensor(SensorEntity):
     """Representation of a Tursib station sensor."""
 
-    def __init__(self, coordinator, station_id, name):
+    def __init__(self, coordinator, station_id, station_name):
         self.coordinator = coordinator
         self._station_id = station_id
-        self._attr_name = f"Tursib {name}"
+        self._attr_name = f"Tursib {station_name}"
         self._attr_unique_id = f"tursib_{station_id}"
 
     @property
     def native_value(self):
-        departures = self.coordinator.data.get(self._station_id, {}).get("departures", [])
+        departures = self.coordinator.data.get("departures", [])
         return departures[0]["departure"] if departures else "n/a"
 
     @property
     def extra_state_attributes(self):
-        return self.coordinator.data.get(self._station_id, {})
+        return self.coordinator.data
