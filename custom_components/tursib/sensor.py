@@ -15,16 +15,13 @@ DOMAIN = "tursib"
 
 
 async def async_setup_entry(hass, config_entry, async_add_entities):
-    """Set up Tursib sensors from a config entry."""
-    stations = config_entry.data.get("stations", {})
-    coordinator = TursibCoordinator(hass, stations)
+    station_id = config_entry.data["station_id"]
+    station_name = config_entry.data["station_name"]
+    coordinator = TursibCoordinator(hass, {station_id: station_name})
     await coordinator.async_config_entry_first_refresh()
 
-    sensors = [
-        TursibSensor(coordinator, station_id, name)
-        for station_id, name in stations.items()
-    ]
-    async_add_entities(sensors)
+    async_add_entities([TursibSensor(coordinator, station_id, station_name)])
+
 
 
 class TursibCoordinator(DataUpdateCoordinator):

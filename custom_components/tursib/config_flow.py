@@ -1,11 +1,10 @@
 import voluptuous as vol
 from homeassistant import config_entries
 from homeassistant.core import callback
-from homeassistant.const import CONF_NAME
-
 from .const import DOMAIN
 
-CONF_STATIONS = "stations"
+CONF_STATION_ID = "station_id"
+CONF_STATION_NAME = "station_name"
 
 
 class TursibConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -16,31 +15,16 @@ class TursibConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_user(self, user_input=None):
         errors = {}
         if user_input is not None:
-            # Validate that at least one station is provided
-            stations = user_input.get(CONF_STATIONS, {})
-            if not stations:
-                errors["base"] = "no_stations"
-            else:
-                return self.async_create_entry(title="Tursib", data=user_input)
+            return self.async_create_entry(title=user_input[CONF_STATION_NAME], data=user_input)
 
         schema = vol.Schema(
             {
-                vol.Required(CONF_STATIONS): vol.Schema(
-                    {
-                        vol.Required("123"): str,
-                        vol.Optional("456"): str,
-                    }
-                )
+                vol.Required(CONF_STATION_ID): str,
+                vol.Required(CONF_STATION_NAME): str,
             }
         )
 
-        return self.async_show_form(
-            step_id="user", data_schema=schema, errors=errors
-        )
-
-    @callback
-    def async_get_options_flow(config_entry):
-        return TursibOptionsFlowHandler(config_entry)
+        return self.async_show_form(step_id="user", data_schema=schema, errors=errors)
 
 
 class TursibOptionsFlowHandler(config_entries.OptionsFlow):
@@ -53,11 +37,10 @@ class TursibOptionsFlowHandler(config_entries.OptionsFlow):
         if user_input is not None:
             return self.async_create_entry(title="", data=user_input)
 
-        stations = self.config_entry.data.get(CONF_STATIONS, {})
-
         schema = vol.Schema(
             {
-                vol.Required(CONF_STATIONS, default=stations): dict,
+                vol.Required(CONF_STATION_ID, default=self.config_entry.data[CONF_STATION_ID]): str,
+                vol.Required(CONF_STATION_NAME, default=self.config_entry.data[CONF_STATION_NAME]): str,
             }
         )
 
