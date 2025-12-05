@@ -203,3 +203,5 @@ class TursibSensor(CoordinatorEntity, SensorEntity):
     def extra_state_attributes(self):
         """Return full data including sorted upcoming departures."""
         return self.coordinator.data or {}
+
+#v0.1.5
