@@ -41,7 +41,7 @@ Preia orarele în timp real de pe [tursib.ro](https://tursib.ro) și le expune c
 ### UI (Config Flow)
 1. Mergi la **Settings → Devices & Services → Add Integration**.
 2. Caută **Tursib Bus Departures**.
-3. Introdu ID-urile și numele stațiilor (ex.: `123: Gara`, `456: Centru`). ID-urile pot fi găsite pe [tursib.ro](https://tursib.ro) in pagina fiecarei statii.
+3. Introdu ID-urile și numele stațiilor (ex.: `123: Gara`, `456: Centru`). ID-urile pot fi găsite pe [tursib.ro](https://tursib.ro) în pagina fiecărei stații.
 4. Senzorii vor fi creați automat.
 
 ### Example Sensor
