@@ -7,5 +7,6 @@
   "codeowners": ["@clmun"],
   "iot_class": "cloud_polling",
   "config_flow": true,
-  "logo": "https://raw.githubusercontent.com/clmun/tursib/main/tursib_logo.png"
+  "logo": "https://raw.githubusercontent.com/clmun/tursib/main/tursib_logo.png",
+  "icon": "https://raw.githubusercontent.com/clmun/tursib/main/tursib_logo.png"
 }
