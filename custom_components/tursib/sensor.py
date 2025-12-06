@@ -101,12 +101,7 @@ class TursibCoordinator(DataUpdateCoordinator):
                 return None, None
 
         delta = (dep_dt - now_dt).total_seconds()
-        if delta < 30:
-            minutes = "Acum"
-        else:
-            # minutes = str(math.ceil(delta / 60))
-            # minutes = str(round(delta / 60))  # rotunjire la cel mai apropiat minut
-            minutes = str(int(delta // 60))
+        minutes = "Acum" if delta < 60 else str(int(delta // 60))
         return minutes, dep_dt
 
     def _sorted_departures(self, departures, now_dt):
