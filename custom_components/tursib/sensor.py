@@ -193,10 +193,10 @@ class TursibSensor(CoordinatorEntity, SensorEntity):
 
     @property
     def native_value(self):
-        """Return minutes until next departure (updates every refresh)."""
+        """Return ora următoarei plecări (ca în AppDaemon)."""
         data = self.coordinator.data or {}
         departures = data.get("departures", [])
-        return departures[0]["minutes"] if departures else "n/a"
+        return departures[0]["departure"] if departures else "n/a"
 
     @property
     def extra_state_attributes(self):
