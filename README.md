@@ -1,46 +1,48 @@
+![Logo](tursib_logo.png)
+![Screenshot](tursib_metropolitan.jpg)
 # 📍 Tursib Bus Departures – Home Assistant Integration
 
-This custom integration adds **Tursib bus departure sensors** to Home Assistant.  
-It scrapes live timetables from [tursib.ro](https://tursib.ro) and exposes them as sensors with attributes for upcoming departures, line, destination, and minutes until arrival.
+Această integrare personalizată adaugă senzori pentru plecările autobuzelor Tursib în Home Assistant.
+Preia orarele în timp real de pe [tursib.ro](https://tursib.ro) și le expune ca senzori cu atribute pentru următoarele plecări, linie, destinație și minute până la sosire.
 
 ---
 
-## ✨ Features
-- Sensors for each configured bus station
-- Attributes include:
-  - **Line** (bus route number)
-  - **Destination**
-  - **Scheduled departure time**
-  - **Minutes until departure** (or `"Acum"` if < 60s)
-  - **Program type** (Weekday, Saturday, Sunday)
-  - **Last update timestamp**
-- Automatic refresh every minute
-- Works natively inside Home Assistant (no AppDaemon required)
+## ✨ Funcționalități
+- Senzori pentru fiecare stație configurată
+- Atribute incluse:
+  - **Linie** (numărul rutei)
+  - **Destinația**
+  - **Ora programată de plecare**
+  - **Minute până la plecare** 
+  - **Tipul programului** (Zi lucrătoare, Sâmbătă, Duminică)
+  - **Timpul ultimei actualizări**
+- Refresh automat la fiecare minut
+- Funcționează nativ în Home Assistant (fără AppDaemon)
 
 ---
 
-## 📦 Installation
+## 📦 Instalare
 
-### Via HACS (recommended)
-1. Open HACS in Home Assistant.
-2. Go to **Integrations → Custom repositories**.
-3. Add your repo URL and select category **Integration**.
-4. Search for **Tursib Bus Departures** and install.
-5. Restart Home Assistant.
+### Via HACS (recomandat)
+1. Deschide HACS în Home Assistant.
+2. Mergi la **Integrations → Custom repositories**.
+3. Adaugă URL-ul repo-ului și selectează categoria **Integration**.
+4. Caută **Tursib Bus Departures** și instalează.
+5. Repornește Home Assistant.
 
 ### Manual
-1. Copy the `custom_components/tursib/` folder into your Home Assistant `config/custom_components/` directory.
-2. Restart Home Assistant.
+1. Copiază folderul `custom_components/tursib/` în directorul `config/custom_components/` al Home Assistant.
+2. Repornește Home Assistant.
 
 ---
 
-## ⚙️ Configuration
+## ⚙️ Configurare
 
 ### UI (Config Flow)
-1. Go to **Settings → Devices & Services → Add Integration**.
-2. Search for **Tursib**.
-3. Enter your station IDs and names (e.g. `123: Gara`, `456: Centru`).
-4. Sensors will be created automatically.
+1. Mergi la **Settings → Devices & Services → Add Integration**.
+2. Caută **Tursib Bus Departures**.
+3. Introdu ID-urile și numele stațiilor (ex.: `123: Gara`, `456: Centru`). ID-urile pot fi găsite pe [tursib.ro](https://tursib.ro) in pagina fiecarei statii.
+4. Senzorii vor fi creați automat.
 
 ### Example Sensor
 ```yaml
