@@ -1,5 +1,4 @@
 import datetime
-# import math
 import logging
 import aiohttp
 from bs4 import BeautifulSoup
@@ -10,6 +9,7 @@ from homeassistant.helpers.update_coordinator import (
     UpdateFailed,
     CoordinatorEntity,
 )
+from homeassistant.util import dt as dt_util
 
 from .const import DOMAIN
 
@@ -40,7 +40,7 @@ class TursibCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         """Fetch data for the configured station asynchronously."""
-        now = datetime.datetime.now()
+        now = dt_util.now().replace(second=0, microsecond=0)
         try:
             url = f"https://tursib.ro/s/{self.station_id}?arrivals=on"
             async with aiohttp.ClientSession() as session:
@@ -51,13 +51,12 @@ class TursibCoordinator(DataUpdateCoordinator):
 
             parsed = self.parse_html_to_json(text)
             if not parsed:
-                # return empty structure instead of raising, so the entity stays alive
                 _LOGGER.warning("No timetable data found for station %s", self.station_id)
                 return {
                     "station": self.station_name,
                     "program": "Necunoscut",
                     "departures": [],
-                    "last_update": datetime.datetime.now().isoformat(),
+                    "last_update": dt_util.now().isoformat(),
                 }
 
             weekday = now.weekday()
@@ -78,14 +77,13 @@ class TursibCoordinator(DataUpdateCoordinator):
                 "station": self.station_name,
                 "program": program_label,
                 "departures": departures_sorted,
-                "last_update": datetime.datetime.now().isoformat(),
+                "last_update": dt_util.now().isoformat(),
             }
         except Exception as e:
-            # keep coordinator running but surface the error
             raise UpdateFailed(f"Error updating station {self.station_name}: {e}")
 
-    def _minutes_and_dt(self, now_dt, hhmm, allow_next_day=False):
-        """Compute minutes and departure datetime; skip past times unless fallback."""
+    def _minutes_and_dt(self, now_dt, hhmm, allow_next_day=True):
+        """Compute minutes and departure datetime; always allow next day rollover."""
         try:
             h, m = map(int, hhmm.split(":"))
         except Exception:
@@ -93,23 +91,19 @@ class TursibCoordinator(DataUpdateCoordinator):
 
         dep_dt = datetime.datetime.combine(now_dt.date(), datetime.time(h, m))
 
-        # In timpul zilei, eliminam plecarile trecute.
         if dep_dt <= now_dt:
-            if allow_next_day:
-                dep_dt += datetime.timedelta(days=1)
-            else:
-                return None, None
+            dep_dt += datetime.timedelta(days=1)
 
         delta = (dep_dt - now_dt).total_seconds()
         minutes = "Acum" if delta < 60 else str(int(delta // 60))
         return minutes, dep_dt
 
     def _sorted_departures(self, departures, now_dt):
-        """Return only future departures for today; fallback to next day if none."""
+        """Return mereu următoarele 5 curse (azi + mâine)."""
         occ = []
         for d in departures:
             dep_str = d.get("departure", "")
-            minutes, dep_dt = self._minutes_and_dt(now_dt, dep_str, allow_next_day=False)
+            minutes, dep_dt = self._minutes_and_dt(now_dt, dep_str, allow_next_day=True)
             if minutes is None:
                 continue
             item = {
@@ -121,25 +115,8 @@ class TursibCoordinator(DataUpdateCoordinator):
             }
             occ.append((dep_dt, item))
 
-        # Fallback pentru ziua urmatoare doar daca nu mai avem plecari azi.
-        if not occ:
-            for d in departures:
-                dep_str = d.get("departure", "")
-                minutes, dep_dt = self._minutes_and_dt(now_dt, dep_str, allow_next_day=True)
-                if minutes is None:
-                    continue
-                item = {
-                    "line": d.get("line", "?"),
-                    "destination": d.get("destination", "?"),
-                    "departure": dep_str,
-                    "minutes": minutes,
-                    "scheduled_time": dep_str,
-                }
-                occ.append((dep_dt, item))
-
         occ.sort(key=lambda x: x[0])
-        # Optional: limiteaza la primele N
-        return [x[1] for x in occ][:10]
+        return [x[1] for x in occ][:5]  # mereu primele 5 curse
 
     def parse_html_to_json(self, html):
         soup = BeautifulSoup(html, "html.parser")
@@ -183,14 +160,14 @@ class TursibSensor(CoordinatorEntity, SensorEntity):
     """Representation of a Tursib station sensor."""
 
     def __init__(self, coordinator, station_id, station_name):
-        super().__init__(coordinator)  # ✅ conectează entitatea la coordinator
+        super().__init__(coordinator)
         self._station_id = station_id
         self._attr_name = f"Tursib {station_name}"
         self._attr_unique_id = f"tursib_{station_id}"
 
     @property
     def native_value(self):
-        """Return ora următoarei plecări (ca în AppDaemon)."""
+        """Return ora următoarei plecări."""
         data = self.coordinator.data or {}
         departures = data.get("departures", [])
         return departures[0]["departure"] if departures else "n/a"
