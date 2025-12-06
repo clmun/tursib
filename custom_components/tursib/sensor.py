@@ -1,5 +1,5 @@
 import datetime
-import math
+# import math
 import logging
 import aiohttp
 from bs4 import BeautifulSoup
@@ -101,10 +101,12 @@ class TursibCoordinator(DataUpdateCoordinator):
                 return None, None
 
         delta = (dep_dt - now_dt).total_seconds()
-        if delta < 60:
+        if delta < 30:
             minutes = "Acum"
         else:
-            minutes = str(math.ceil(delta / 60))
+            # minutes = str(math.ceil(delta / 60))
+            # minutes = str(round(delta / 60))  # rotunjire la cel mai apropiat minut
+            minutes = str(int(delta // 60))
         return minutes, dep_dt
 
     def _sorted_departures(self, departures, now_dt):
@@ -193,10 +195,10 @@ class TursibSensor(CoordinatorEntity, SensorEntity):
 
     @property
     def native_value(self):
-        """Return minutes until next departure (updates every refresh)."""
+        """Return ora următoarei plecări (ca în AppDaemon)."""
         data = self.coordinator.data or {}
         departures = data.get("departures", [])
-        return departures[0]["minutes"] if departures else "n/a"
+        return departures[0]["departure"] if departures else "n/a"
 
     @property
     def extra_state_attributes(self):
