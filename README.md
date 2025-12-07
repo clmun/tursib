@@ -12,7 +12,7 @@ Preia orarele în timp real de pe [tursib.ro](https://tursib.ro) și le expune c
 - Actualizare automată la fiecare minut prin DataUpdateCoordinator
 - Filtrare inteligentă: afișează doar plecările viitoare și trece automat la ziua următoare dacă nu mai sunt curse
 - Listă mereu completă: senzorul returnează următoarele 5 plecări (azi + mâine), astfel încât cardurile Lovelace să nu rămână niciodată fără date
-- Compatibilitate directă cu tursib-card pentru afișare elegantă în Lovelace
+- Compatibilitate directă cu **[tursib-card](https://github.com/clmun/tursib-card)** pentru afișare elegantă în Lovelace
 - Funcționează nativ în Home Assistant (fără AppDaemon)
 - Configurare ușoară prin UI (Config Flow)
 - Suport pentru HACS
@@ -90,7 +90,7 @@ friendly_name: Tursib Nicolae Iorga
 
 ```
 ---
-## 🖼️ Exemplu Lovelace cu tursib-card
+## 🖼️ Exemplu Lovelace cu **[tursib-card](https://github.com/clmun/tursib-card)**
 ```yaml
 type: custom:tursib-card
 entity: sensor.tursib_station
