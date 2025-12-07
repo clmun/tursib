@@ -47,8 +47,7 @@ Preia orarele în timp real de pe [tursib.ro](https://tursib.ro) și le expune c
 ### Example Sensor
 ```yaml
 sensor.tursib_gara
-
----
+```
 
 ## ☕ Susține dezvoltatorul
 
