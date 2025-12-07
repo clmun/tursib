@@ -56,20 +56,50 @@ sensor.tursib_centru
 - `station_id`: ID-ul stației
 - `station_name`: Numele stației
 - `all_departures`: Listă cu următoarele 5 plecări
+```yaml
+station: Nicolae Iorga
+program: Duminică
+departures:
+  - line: "1"
+    destination: Spre stația CALEA DUMBRAVII
+    departure: "16:30"
+    minutes: "7"
+    scheduled_time: "16:30"
+  - line: "1"
+    destination: Spre stația CALEA DUMBRAVII
+    departure: "16:55"
+    minutes: "32"
+    scheduled_time: "16:55"
+  - line: "14"
+    destination: Spre stația VALEA AURIE
+    departure: "17:00"
+    minutes: "37"
+    scheduled_time: "17:00"
+  - line: "11"
+    destination: Spre stația CARTIERUL PRIMAVERII, CARTIERUL PRIMAVERII - SIRETULUI
+    departure: "17:03"
+    minutes: "40"
+    scheduled_time: "17:03"
+  - line: "1"
+    destination: Spre stația CALEA DUMBRAVII
+    departure: "17:20"
+    minutes: "57"
+    scheduled_time: "17:20"
+last_update: "2025-12-07T16:23:19.850954+02:00"
+friendly_name: Tursib Nicolae Iorga
+
+```
 ---
 ## 📄 Licență
 Acest proiect este licențiat sub [MIT License](LICENSE).
----
 ## 🤝 Contribuții
 Contribuțiile sunt binevenite! Te rugăm să deschizi un issue sau un pull request pe GitHub.
----
+
 ## 📞 Contact
 Pentru întrebări sau suport, te rugăm să deschizi un issue pe GitHub.
----
 
 ## 🌟 Mulțumiri
 Mulțumiri speciale comunității Home Assistant și tuturor celor care contribuie la dezvoltarea ecosistemului de integrații personalizate!
----
 
 ## ☕ Susține dezvoltatorul
 
