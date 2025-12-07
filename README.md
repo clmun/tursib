@@ -90,6 +90,16 @@ friendly_name: Tursib Nicolae Iorga
 
 ```
 ---
+## 🖼️ Exemplu Lovelace cu tursib-card
+```yaml
+type: custom:tursib-card
+entity: sensor.tursib_station
+title: Plecări Tursib
+max_departures: 5
+```
+### Exemplu cu tursib-card
+![Captură de ecran 1](https://raw.githubusercontent.com/clmun/tursib-card/master/images/Station_1.png)
+
 ## 📄 Licență
 Acest proiect este licențiat sub [MIT License](LICENSE).
 ## 🤝 Contribuții
