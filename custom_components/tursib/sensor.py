@@ -89,6 +89,9 @@ class TursibCoordinator(DataUpdateCoordinator):
         except Exception:
             return None, None
 
+        # normalizează la naive datetime pentru comparații corecte
+        now_dt = now_dt.replace(tzinfo=None)
+
         dep_dt = datetime.datetime.combine(now_dt.date(), datetime.time(h, m))
 
         if dep_dt <= now_dt:
