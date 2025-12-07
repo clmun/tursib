@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ad248bb5-175d-49b2-8756-f2a05cbe1ef5" name="Changes" comment="added support section for developer contributions in README" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <excluded-from-favorite>
+      <branch-storage>
+        <map>
+          <entry type="LOCAL">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="main" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </excluded-from-favorite>
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--follow-tags" />
+        <option name="title" value="Current Branch" />
+      </GitPushTagMode>
+    </option>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="MIXED" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;clmun&quot;
+  }
+}</component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
+    {
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOQg_VvM63bcmt&quot;,
+        &quot;number&quot;: 4
+      },
+      &quot;lastSeen&quot;: 1765021253890
+    }
+  ]
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/clmun/tursib&quot;,
+    &quot;accountId&quot;: &quot;13755ba6-103e-4607-a612-2608be5c46ad&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;clmun&quot;,
+    &quot;repository&quot;: &quot;tursib&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="36QAkHBrRYqF29pH1uFD4fkORAK" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Python.sensor.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;development&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/clmun/PycharmProjects/tursib&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/custom_components" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-7bb8055f9097-cbfc7b97e6b2-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-252.28238.29" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ad248bb5-175d-49b2-8756-f2a05cbe1ef5" name="Changes" comment="" />
+      <created>1764928562762</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1764928562762</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Minutele se calculează mereu față de timpul local Home Assistant (timezone‑aware).&#10;&#10;Secundele nu mai influențează calculul → diferențele mici dispar.&#10;&#10;Rotunjirea la cel mai apropiat minut face ca afișarea să fie mai „naturală” (ex. 1 min 20 sec → 1 min, 1 min 40 sec → 2 min).">
+      <option name="closed" value="true" />
+      <created>1764929970349</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1764929970349</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Minutele se calculează mereu față de timpul local Home Assistant (timezone‑aware).&#10;&#10;Secundele nu mai influențează calculul → diferențele mici dispar.&#10;&#10;Rotunjirea la cel mai apropiat minut face ca afișarea să fie mai „naturală” (ex. 1 min 20 sec → 1 min, 1 min 40 sec → 2 min).">
+      <option name="closed" value="true" />
+      <created>1764930205849</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1764930205849</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Reverted to">
+      <option name="closed" value="true" />
+      <created>1764934970484</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1764934970484</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Fix">
+      <option name="closed" value="true" />
+      <created>1764936837187</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1764936837187</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Traducere in romana a documentatiei si adaugare logo">
+      <option name="closed" value="true" />
+      <created>1764998193625</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1764998193625</updated>
+    </task>
+    <task id="LOCAL-00006" summary="starea senzorului va fi ora urmatoarei plecari">
+      <option name="closed" value="true" />
+      <created>1765000094816</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1765000094816</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Adaugat logo in HACS">
+      <option name="closed" value="true" />
+      <created>1765000295835</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1765000295835</updated>
+    </task>
+    <task id="LOCAL-00008" summary="schimbat modul de calcul minute pana la plecare">
+      <option name="closed" value="true" />
+      <created>1765021175788</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1765021175788</updated>
+    </task>
+    <task id="LOCAL-00009" summary="schimbat modul de calcul minute pana la plecare">
+      <option name="closed" value="true" />
+      <created>1765022263859</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1765022263859</updated>
+    </task>
+    <task id="LOCAL-00010" summary="updated logo link">
+      <option name="closed" value="true" />
+      <created>1765022627842</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1765022627842</updated>
+    </task>
+    <task id="LOCAL-00011" summary="version update">
+      <option name="closed" value="true" />
+      <created>1765022745873</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1765022745873</updated>
+    </task>
+    <task id="LOCAL-00012" summary="added icon for HACS">
+      <option name="closed" value="true" />
+      <created>1765023553785</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1765023553785</updated>
+    </task>
+    <task id="LOCAL-00013" summary="_minutes_and_dt are mereu allow_next_day=True.&#10;&#10;_sorted_departures sortează toate orele (azi + mâine) și taie lista la primele 5.&#10;&#10;Cardul Lovelace are mereu 5 plecări disponibile, deci nu mai apare eroarea.">
+      <option name="closed" value="true" />
+      <created>1765054140223</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1765054140223</updated>
+    </task>
+    <task id="LOCAL-00014" summary="added support section for developer contributions in README">
+      <option name="closed" value="true" />
+      <created>1765108632878</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1765108632878</updated>
+    </task>
+    <task id="LOCAL-00015" summary="added support section for developer contributions in README">
+      <option name="closed" value="true" />
+      <created>1765108893964</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1765108893964</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/main" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="v0.1.4" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/v0.1.2" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Minutele se calculează mereu față de timpul local Home Assistant (timezone‑aware).&#10;&#10;Secundele nu mai influențează calculul → diferențele mici dispar.&#10;&#10;Rotunjirea la cel mai apropiat minut face ca afișarea să fie mai „naturală” (ex. 1 min 20 sec → 1 min, 1 min 40 sec → 2 min)." />
+    <MESSAGE value="Reverted to" />
+    <MESSAGE value="Fix" />
+    <MESSAGE value="Traducere in romana a documentatiei si adaugare logo" />
+    <MESSAGE value="starea senzorului va fi ora urmatoarei plecari" />
+    <MESSAGE value="Adaugat logo in HACS" />
+    <MESSAGE value="schimbat modul de calcul minute pana la plecare" />
+    <MESSAGE value="updated logo link" />
+    <MESSAGE value="version update" />
+    <MESSAGE value="added icon for HACS" />
+    <MESSAGE value="_minutes_and_dt are mereu allow_next_day=True.&#10;&#10;_sorted_departures sortează toate orele (azi + mâine) și taie lista la primele 5.&#10;&#10;Cardul Lovelace are mereu 5 plecări disponibile, deci nu mai apare eroarea." />
+    <MESSAGE value="added support section for developer contributions in README" />
+    <option name="LAST_COMMIT_MESSAGE" value="added support section for developer contributions in README" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
+  </component>
+</project>
