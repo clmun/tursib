@@ -148,7 +148,8 @@ class TursibCoordinator(DataUpdateCoordinator):
 
         for sec in sections:
             header = sec.find("h4")
-            if not header: continue
+            if not header:
+                continue
 
             title = header.text.strip().lower()
             if "luni" in title:
