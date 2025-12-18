@@ -105,8 +105,9 @@ class TursibCoordinator(DataUpdateCoordinator):
         return minutes, dep_dt
 
     def _sorted_departures(self, departures, now_dt):
-        """Return only future departures for today; fallback to next day if none."""
+        """Return future departures for today, plus next day's first ones if needed."""
         occ = []
+        # Plecările rămase azi
         for d in departures:
             dep_str = d.get("departure", "")
             minutes, dep_dt = self._minutes_and_dt(now_dt, dep_str, allow_next_day=False)
@@ -121,8 +122,8 @@ class TursibCoordinator(DataUpdateCoordinator):
             }
             occ.append((dep_dt, item))
 
-        # Fallback pentru ziua urmatoare doar daca nu mai avem plecari azi.
-        if not occ:
+        # Dacă avem mai puțin de 5, adăugăm din ziua următoare
+        if len(occ) < 5:
             for d in departures:
                 dep_str = d.get("departure", "")
                 minutes, dep_dt = self._minutes_and_dt(now_dt, dep_str, allow_next_day=True)
@@ -136,9 +137,11 @@ class TursibCoordinator(DataUpdateCoordinator):
                     "scheduled_time": dep_str,
                 }
                 occ.append((dep_dt, item))
+                if len(occ) >= 10:  # limitează totalul la 10
+                    break
 
         occ.sort(key=lambda x: x[0])
-        # Optional: limiteaza la primele N
+        # întoarcem primele 10, dar cardul tău poate afișa doar 5
         return [x[1] for x in occ][:10]
 
     def parse_html_to_json(self, html):
