@@ -140,40 +140,45 @@ class TursibCoordinator(DataUpdateCoordinator):
             else:
                 continue
 
+            # Fiecare 'card-body' reprezintă o direcție a unei linii (ex: 11 dus, 11 întors)
             rows = sec.find_all("div", class_="card-body")
             for r in rows:
                 line_el = r.find("a", class_="traseu-link")
                 dir_el = r.find("span", class_="headsign-info")
 
-                line = line_el.text.strip() if line_el else "?"
+                if not line_el: continue
+                line = line_el.get_text(strip=True)
 
-                # --- LOGICA PENTRU DESTINAȚII MULTIPLE ---
-                raw_dest_text = dir_el.text.strip() if dir_el else ""
-                # Curățăm textul "Spre stația " și împărțim după virgulă
+                # Extragem textul complet de destinație (ex: "Spre stația A, B, C")
+                raw_dest_text = dir_el.get_text(strip=True) if dir_el else ""
+
+                # Curățăm prefixul și separăm destinațiile după virgulă
                 clean_dest = raw_dest_text.replace("Spre stația", "").strip()
                 dest_list = [d.strip() for d in clean_dest.split(",") if d.strip()]
 
-                # Extragem toate orele (span-urile cu clasa 'h')
+                # Luăm toate orele de plecare (span-urile cu clasa 'h')
                 time_spans = r.find_all("span", class_="h")
-
                 for ts in time_spans:
-                    t_text = ts.text.strip()
-                    if ":" not in t_text: continue
+                    t_text = ts.get_text(strip=True)
+                    # Eliminăm textele care nu sunt ore (ex: leading "00:00")
+                    if ":" not in t_text or len(t_text) > 5:
+                        continue
 
-                    # Determinăm destinația pe baza clasei CSS (c0, c1, c2...)
-                    # Implicit folosim prima destinație din listă
-                    final_destination = dest_list[0] if dest_list else "?"
+                    # Destinația implicită este prima din listă
+                    final_destination = dest_list[0] if dest_list else raw_dest_text
 
+                    # Verificăm clasa de culoare: p0, p1, p2...
                     classes = ts.get("class", [])
                     for cls in classes:
-                        if cls.startswith("c") and len(cls) > 1:
+                        if cls.startswith("p") and len(cls) > 1:
                             try:
-                                # c0 -> index 0, c1 -> index 1 etc.
+                                # Extragem cifra de după 'p' (ex: din 'p1' luăm 1)
                                 idx = int(cls[1:])
                                 if idx < len(dest_list):
                                     final_destination = dest_list[idx]
-                            except ValueError:
+                            except (ValueError, IndexError):
                                 pass
+                            break  # Am găsit clasa pX, nu mai căutăm în restul claselor span-ului
 
                     data[key].append({
                         "line": line,
