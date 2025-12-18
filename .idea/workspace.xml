@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ad248bb5-175d-49b2-8756-f2a05cbe1ef5" name="Changes" comment="update README.md" />
+    <list default="true" id="ad248bb5-175d-49b2-8756-f2a05cbe1ef5" name="Changes" comment="Determinare destinatie cand sunt destinatii multiple">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/tursib/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/custom_components/tursib/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/custom_components/tursib/sensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/custom_components/tursib/sensor.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,7 +43,7 @@
     </option>
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="development" />
+        <entry key="$PROJECT_DIR$" value="dev" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -94,7 +98,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev-destinatii__multiple&quot;,
     &quot;last_opened_file_path&quot;: &quot;/home/clmun/PycharmProjects/tursib&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
   }
@@ -307,7 +311,39 @@
       <option name="project" value="LOCAL" />
       <updated>1765120374850</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="update README.md">
+      <option name="closed" value="true" />
+      <created>1765128701900</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1765128701900</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Dacă avem mai puțin de 5 plecari, adăugăm din ziua următoare ca tot timpul sa avem minim 10 plecari.">
+      <option name="closed" value="true" />
+      <created>1765953315533</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1765953315533</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Determinare destinatie cand sunt destinatii multiple">
+      <option name="closed" value="true" />
+      <created>1766046719084</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1766046719084</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Determinare destinatie cand sunt destinatii multiple">
+      <option name="closed" value="true" />
+      <created>1766048929002</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1766048929002</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -318,7 +354,27 @@
             <list>
               <RecentGroup>
                 <option name="FILTER_VALUES">
+                  <option value="origin/dev" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
                   <option value="origin/main" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="HEAD" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/dev-destinatii_multiple" />
+                </option>
+              </RecentGroup>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/development" />
                 </option>
               </RecentGroup>
               <RecentGroup>
@@ -351,7 +407,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="origin/main" />
+                        <option value="origin/dev" />
                       </list>
                     </value>
                   </entry>
@@ -379,7 +435,9 @@
     <MESSAGE value="normalize naive datetime for accurate comparisons in sensor.py" />
     <MESSAGE value="add XML configuration files for project components and settings" />
     <MESSAGE value="update README.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="update README.md" />
+    <MESSAGE value="Dacă avem mai puțin de 5 plecari, adăugăm din ziua următoare ca tot timpul sa avem minim 10 plecari." />
+    <MESSAGE value="Determinare destinatie cand sunt destinatii multiple" />
+    <option name="LAST_COMMIT_MESSAGE" value="Determinare destinatie cand sunt destinatii multiple" />
   </component>
   <component name="github-copilot-workspace">
     <instructionFileLocations>
