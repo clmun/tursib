@@ -1,4 +1,5 @@
 import datetime
+# import math
 import logging
 import aiohttp
 from bs4 import BeautifulSoup
@@ -50,6 +51,7 @@ class TursibCoordinator(DataUpdateCoordinator):
 
             parsed = self.parse_html_to_json(text)
             if not parsed:
+                # return empty structure instead of raising, so the entity stays alive
                 _LOGGER.warning("No timetable data found for station %s", self.station_id)
                 return {
                     "station": self.station_name,
@@ -60,11 +62,14 @@ class TursibCoordinator(DataUpdateCoordinator):
 
             weekday = now.weekday()
             if weekday < 5:
-                program_key, program_label = "luni-vineri", "Luni–Vineri"
+                program_key = "luni-vineri"
+                program_label = "Luni–Vineri"
             elif weekday == 5:
-                program_key, program_label = "sambata", "Sâmbătă"
+                program_key = "sambata"
+                program_label = "Sâmbătă"
             else:
-                program_key, program_label = "duminica", "Duminică"
+                program_key = "duminica"
+                program_label = "Duminică"
 
             departures_raw = parsed.get(program_key, [])
             departures_sorted = self._sorted_departures(departures_raw, now)
@@ -76,15 +81,19 @@ class TursibCoordinator(DataUpdateCoordinator):
                 "last_update": datetime.datetime.now().isoformat(),
             }
         except Exception as e:
+            # keep coordinator running but surface the error
             raise UpdateFailed(f"Error updating station {self.station_name}: {e}")
 
     def _minutes_and_dt(self, now_dt, hhmm, allow_next_day=False):
+        """Compute minutes and departure datetime; skip past times unless fallback."""
         try:
             h, m = map(int, hhmm.split(":"))
-        except:
+        except Exception:
             return None, None
 
         dep_dt = datetime.datetime.combine(now_dt.date(), datetime.time(h, m))
+
+        # In timpul zilei, eliminam plecarile trecute.
         if dep_dt <= now_dt:
             if allow_next_day:
                 dep_dt += datetime.timedelta(days=1)
@@ -96,15 +105,29 @@ class TursibCoordinator(DataUpdateCoordinator):
         return minutes, dep_dt
 
     def _sorted_departures(self, departures, now_dt):
+        """Return only future departures for today; fallback to next day if none."""
         occ = []
-        # Plecări azi și mâine (pentru continuitate noaptea)
-        for allow_next in [False, True]:
+        for d in departures:
+            dep_str = d.get("departure", "")
+            minutes, dep_dt = self._minutes_and_dt(now_dt, dep_str, allow_next_day=False)
+            if minutes is None:
+                continue
+            item = {
+                "line": d.get("line", "?"),
+                "destination": d.get("destination", "?"),
+                "departure": dep_str,
+                "minutes": minutes,
+                "scheduled_time": dep_str,
+            }
+            occ.append((dep_dt, item))
+
+        # Fallback pentru ziua urmatoare doar daca nu mai avem plecari azi.
+        if not occ:
             for d in departures:
                 dep_str = d.get("departure", "")
-                minutes, dep_dt = self._minutes_and_dt(now_dt, dep_str, allow_next_day=allow_next)
+                minutes, dep_dt = self._minutes_and_dt(now_dt, dep_str, allow_next_day=True)
                 if minutes is None:
                     continue
-
                 item = {
                     "line": d.get("line", "?"),
                     "destination": d.get("destination", "?"),
@@ -112,13 +135,10 @@ class TursibCoordinator(DataUpdateCoordinator):
                     "minutes": minutes,
                     "scheduled_time": dep_str,
                 }
-                # Evităm duplicatele dacă adăugăm și pentru ziua următoare
-                if not any(
-                        x[1]['departure'] == item['departure'] and x[1]['line'] == item['line'] and x[0] == dep_dt for x
-                        in occ):
-                    occ.append((dep_dt, item))
+                occ.append((dep_dt, item))
 
         occ.sort(key=lambda x: x[0])
+        # Optional: limiteaza la primele N
         return [x[1] for x in occ][:10]
 
     def parse_html_to_json(self, html):
@@ -193,17 +213,19 @@ class TursibSensor(CoordinatorEntity, SensorEntity):
     """Representation of a Tursib station sensor."""
 
     def __init__(self, coordinator, station_id, station_name):
-        super().__init__(coordinator)
+        super().__init__(coordinator)  # ✅ conectează entitatea la coordinator
         self._station_id = station_id
         self._attr_name = f"Tursib {station_name}"
         self._attr_unique_id = f"tursib_{station_id}"
 
     @property
     def native_value(self):
+        """Return ora următoarei plecări (ca în AppDaemon)."""
         data = self.coordinator.data or {}
         departures = data.get("departures", [])
         return departures[0]["departure"] if departures else "n/a"
 
     @property
     def extra_state_attributes(self):
+        """Return full data including sorted upcoming departures."""
         return self.coordinator.data or {}
