@@ -1,7 +1,7 @@
 {
   "domain": "tursib",
   "name": "Tursib Bus Departures",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "documentation": "https://github.com/clmun/tursib",
   "requirements": ["beautifulsoup4", "requests"],
   "codeowners": ["@clmun"],
