@@ -25,8 +25,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         entry.data["station_name"],
     )
 
-    # Prima actualizare — dacă eșuează, ridică ConfigEntryNotReady
-    await coordinator.async_config_entry_first_refresh()
+    # Create entities even when Tursib is temporarily unreachable.
+    await coordinator.async_refresh()
 
     # Salvează coordinatorul pentru platforma sensor
     hass.data[DOMAIN][entry.entry_id] = coordinator
@@ -44,7 +44,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Unload a Tursib config entry."""
-    unload_ok = await hass.config_entries.async_forward_entry_unload(entry, "sensor")
+    unload_ok = await hass.config_entries.async_unload_platforms(entry, ["sensor"])
     if unload_ok:
         hass.data[DOMAIN].pop(entry.entry_id)
     return unload_ok

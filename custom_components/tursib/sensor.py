@@ -1,10 +1,10 @@
 import datetime
 # import math
 import logging
-import aiohttp
 from bs4 import BeautifulSoup
 
 from homeassistant.components.sensor import SensorEntity
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import (
     DataUpdateCoordinator,
     UpdateFailed,
@@ -43,11 +43,11 @@ class TursibCoordinator(DataUpdateCoordinator):
         now = datetime.datetime.now()
         try:
             url = f"https://tursib.ro/s/{self.station_id}?arrivals=on"
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url, timeout=15) as resp:
-                    if resp.status != 200:
-                        raise UpdateFailed(f"HTTP error {resp.status}")
-                    text = await resp.text()
+            session = async_get_clientsession(self.hass)
+            async with session.get(url, timeout=15) as resp:
+                if resp.status != 200:
+                    raise UpdateFailed(f"HTTP error {resp.status}")
+                text = await resp.text()
 
             parsed = self.parse_html_to_json(text)
             if not parsed:
